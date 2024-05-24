@@ -1,4 +1,4 @@
-transformers 
+transformers
 datasets 
 evaluate 
 accelerate 
@@ -7,6 +7,6 @@ torchvision
 scikit-learn 
 huggingface_hub 
 wandb
-numpy
-tensorflow
+numpy==1.25
+tensorflow==2.15
 tf-keras
