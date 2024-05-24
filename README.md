@@ -1,5 +1,5 @@
-# Trah Classification
-This project utilize Vision Transformer to clasiy trash image dataset. The reason why Vision Transformer is choosed over traditional CNNs because its can they use a self-attention mechanism that allows them to attend to any part of the image, regardless of its location. Its also can be trained on smaller datasets since the dataset only have 5054 samples.
+# Trash Classification
+This project utilize Vision Transformer to clasiy trash image dataset. The reason why Vision Transformer is choosed over traditional CNNs because its can use a self-attention mechanism that allows them to attend to any part of the image, regardless of its location. Its also can be trained on smaller datasets since the dataset only have 5054 samples.
 
 # Step To Reproduce This Project's Model
 - install dependencies
