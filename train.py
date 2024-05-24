@@ -130,32 +130,35 @@ def main():
     loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
     model.compile(optimizer=optimizer, loss=loss)
 
+    evaluation = model.evaluate(tf_eval_dataset)
+    
+    if evaluation[0] > 0.35:
+        metric_callback = KerasMetricCallback(metric_fn=compute_metrics, eval_dataset=tf_eval_dataset)
 
-    metric_callback = KerasMetricCallback(metric_fn=compute_metrics, eval_dataset=tf_eval_dataset)
+        wandb.init(
+                project="vit-trash-classification",
+                config={
+                    "epoch": 3,
+                },
+        )
+        config = wandb.config
 
-    wandb.init(
-            project="vit-trash-classification",
-            config={
-                "epoch": 3,
-            },
-    )
-    config = wandb.config
+        wandb_callbacks = [
+                WandbMetricsLogger(),
+                WandbModelCheckpoint(filepath="my_model_{epoch:02d}"),
+                metric_callback
+        ]
 
-    wandb_callbacks = [
-            WandbMetricsLogger(),
-            WandbModelCheckpoint(filepath="my_model_{epoch:02d}"),
-            metric_callback
-    ]
+        model.fit(tf_train_dataset, validation_data=tf_eval_dataset, epochs=3, callbacks=wandb_callbacks)
 
-    model.fit(tf_train_dataset, validation_data=tf_eval_dataset, epochs=3, callbacks=wandb_callbacks)
 
-    model.evaluate(tf_eval_dataset)
+        model.summary()
 
-    model.summary()
+        model.push_to_hub("vision-trash")
 
-    model.push_to_hub("vision-trash")
-
-    wandb.finish()
+        wandb.finish()
+    else:
+        print('The model is still good enough')
     
 if __name__ == "__main__":
 
