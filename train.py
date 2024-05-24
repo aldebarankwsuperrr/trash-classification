@@ -19,8 +19,8 @@ HF_KEY = os.environ["HF_KEY"]
 WANDB_API_KEY = os.environ["WANDB_API_KEY"]
 
 def main():
-    huggingface_hub.login(token="HF_KEY")
-    wandb.login(key="WANDB_API_KEY")
+    huggingface_hub.login(token=HF_KEY)
+    wandb.login(key=WANDB_API_KEY)
 
     # load dataset
     dataset = load_dataset("garythung/trashnet")
