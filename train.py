@@ -132,7 +132,7 @@ def main():
 
     evaluation = model.evaluate(tf_eval_dataset)
     
-    if evaluation[0] > 0.35:
+    if evaluation > 0.25:
         metric_callback = KerasMetricCallback(metric_fn=compute_metrics, eval_dataset=tf_eval_dataset)
 
         wandb.init(
